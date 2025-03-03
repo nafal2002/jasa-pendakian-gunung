@@ -2,12 +2,17 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
+import { Menu, X, User } from "lucide-react";
+import { useAuth } from "@/context/AuthContext";
+import { useToast } from "@/components/ui/use-toast";
+import { supabase } from "@/lib/supabase";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
+  const { user } = useAuth();
+  const { toast } = useToast();
   
   // Set navbar style based on scroll position
   useEffect(() => {
@@ -27,6 +32,22 @@ const Navbar = () => {
   useEffect(() => {
     setIsMenuOpen(false);
   }, [location]);
+  
+  const handleSignOut = async () => {
+    try {
+      await supabase.auth.signOut();
+      toast({
+        title: "Berhasil keluar",
+        description: "Anda telah keluar dari akun",
+      });
+    } catch (error) {
+      toast({
+        title: "Gagal keluar",
+        description: "Terjadi kesalahan saat keluar",
+        variant: "destructive",
+      });
+    }
+  };
   
   return (
     <header 
@@ -63,12 +84,25 @@ const Navbar = () => {
           
           {/* Auth Buttons - Desktop */}
           <div className="hidden md:flex items-center space-x-3">
-            <Button variant="outline" size="sm" asChild>
-              <Link to="/login">Masuk</Link>
-            </Button>
-            <Button size="sm" asChild>
-              <Link to="/register">Daftar</Link>
-            </Button>
+            {user ? (
+              <div className="flex items-center space-x-3">
+                <span className="text-sm font-medium text-gray-700">
+                  {user.email}
+                </span>
+                <Button variant="outline" size="sm" onClick={handleSignOut}>
+                  Keluar
+                </Button>
+              </div>
+            ) : (
+              <>
+                <Button variant="outline" size="sm" asChild>
+                  <Link to="/login">Masuk</Link>
+                </Button>
+                <Button size="sm" asChild>
+                  <Link to="/login">Daftar</Link>
+                </Button>
+              </>
+            )}
           </div>
           
           {/* Mobile Menu Button */}
@@ -103,12 +137,26 @@ const Navbar = () => {
             
             {/* Auth Buttons - Mobile */}
             <div className="flex flex-col space-y-2">
-              <Button variant="outline" size="sm" className="w-full" asChild>
-                <Link to="/login">Masuk</Link>
-              </Button>
-              <Button size="sm" className="w-full" asChild>
-                <Link to="/register">Daftar</Link>
-              </Button>
+              {user ? (
+                <>
+                  <div className="py-2 px-4 text-sm font-medium text-gray-700 flex items-center gap-2">
+                    <User size={16} />
+                    {user.email}
+                  </div>
+                  <Button variant="outline" size="sm" className="w-full" onClick={handleSignOut}>
+                    Keluar
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Button variant="outline" size="sm" className="w-full" asChild>
+                    <Link to="/login">Masuk</Link>
+                  </Button>
+                  <Button size="sm" className="w-full" asChild>
+                    <Link to="/login">Daftar</Link>
+                  </Button>
+                </>
+              )}
             </div>
           </div>
         </div>
