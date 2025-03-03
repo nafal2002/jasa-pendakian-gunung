@@ -10,7 +10,7 @@ interface PackageCardProps {
   featured?: boolean;
 }
 
-const PackageCard = ({ pkg, featured = false }: PackageCardProps) => {
+export const PackageCard = ({ pkg, featured = false }: PackageCardProps) => {
   return (
     <div className={`glass-card overflow-hidden card-hover ${
       featured ? 'border-primary border-2' : ''

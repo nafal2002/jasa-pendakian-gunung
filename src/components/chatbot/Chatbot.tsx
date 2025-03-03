@@ -9,7 +9,7 @@ import { packages, TrekkingPackage } from "@/utils/packages";
 // Types
 interface Message {
   id: string;
-  sender: 'user' | 'bot';
+  sender: 'user' | 'bot';  // Explicitly define as union type
   text: string;
   timestamp: Date;
 }
@@ -62,7 +62,7 @@ const Chatbot = () => {
     setTimeout(() => {
       setMessages(prev => [
         ...prev, 
-        { id: Date.now().toString(), sender: 'bot', text, timestamp: new Date() }
+        { id: Date.now().toString(), sender: 'bot' as const, text, timestamp: new Date() }
       ]);
       setIsTyping(false);
     }, 1000);
@@ -74,7 +74,7 @@ const Chatbot = () => {
     if (newMessage.trim() === '') return;
     
     // Add user message
-    const userMessage = {
+    const userMessage: Message = {
       id: Date.now().toString(),
       sender: 'user',
       text: newMessage,
