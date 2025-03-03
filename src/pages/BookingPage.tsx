@@ -7,6 +7,12 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import { supabase } from "@/lib/supabase";
+
+interface MidtransResponse {
+  payment_url: string;
+  token: string;
+}
 
 const BookingPage = () => {
   const { mountainName } = useParams<{ mountainName: string }>();
@@ -14,6 +20,7 @@ const BookingPage = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [paymentUrl, setPaymentUrl] = useState<string | null>(null);
 
   useEffect(() => {
     // Redirect to login if not authenticated
@@ -27,19 +34,71 @@ const BookingPage = () => {
     }
   }, [user, navigate, toast]);
 
-  // Handle booking
-  const handleBooking = () => {
+  // Handle booking and create Midtrans payment link
+  const handleBooking = async () => {
     setLoading(true);
-    // Here you would typically make an API call to create a booking
-    setTimeout(() => {
+    
+    try {
+      // Create a booking record in Supabase
+      const bookingData = {
+        user_id: user?.id,
+        mountain_name: mountainName,
+        booking_date: new Date().toISOString(),
+        status: 'pending_payment',
+        amount: 1500000, // Rp 1.500.000
+      };
+      
+      const { data: booking, error } = await supabase
+        .from('bookings')
+        .insert(bookingData)
+        .select()
+        .single();
+        
+      if (error) throw error;
+      
+      // Create Midtrans payment link (in a real app, this would be a server API call)
+      // For demo purposes, we're simulating the response
+      // In production, this should be a secure server-side API call
+      const midtransResponse: MidtransResponse = {
+        payment_url: `https://app.sandbox.midtrans.com/payment-links/${Date.now()}`,
+        token: `midtrans-token-${Date.now()}`
+      };
+      
+      // Save the payment URL
+      setPaymentUrl(midtransResponse.payment_url);
+      
+      // Update the booking with the payment token
+      await supabase
+        .from('bookings')
+        .update({ payment_token: midtransResponse.token })
+        .eq('id', booking.id);
+      
       toast({
-        title: "Pemesanan berhasil",
-        description: `Pemesanan pendakian gunung ${mountainName} telah berhasil`,
+        title: "Pemesanan berhasil dibuat",
+        description: "Silakan lanjutkan ke halaman pembayaran",
       });
+      
+    } catch (error) {
+      console.error("Error creating booking:", error);
+      toast({
+        title: "Gagal membuat pemesanan",
+        description: "Terjadi kesalahan saat membuat pemesanan. Silakan coba lagi.",
+        variant: "destructive",
+      });
+    } finally {
       setLoading(false);
-      // Navigate to a confirmation page or dashboard
-      navigate("/");
-    }, 1500);
+    }
+  };
+
+  // Handle redirection to Midtrans payment page
+  const handlePaymentRedirect = () => {
+    if (paymentUrl) {
+      // Open payment URL in new tab
+      window.open(paymentUrl, '_blank');
+      
+      // Also navigate back to home
+      navigate('/');
+    }
   };
 
   return (
@@ -102,13 +161,22 @@ const BookingPage = () => {
                 <span className="text-lg font-bold text-green-700">Rp 1.500.000</span>
               </div>
               
-              <Button
-                className="w-full bg-green-600 hover:bg-green-700"
-                onClick={handleBooking}
-                disabled={loading}
-              >
-                {loading ? "Memproses..." : "Lanjutkan ke Pembayaran"}
-              </Button>
+              {paymentUrl ? (
+                <Button
+                  className="w-full bg-green-600 hover:bg-green-700"
+                  onClick={handlePaymentRedirect}
+                >
+                  Lanjutkan ke Pembayaran Midtrans
+                </Button>
+              ) : (
+                <Button
+                  className="w-full bg-green-600 hover:bg-green-700"
+                  onClick={handleBooking}
+                  disabled={loading}
+                >
+                  {loading ? "Memproses..." : "Lanjutkan ke Pembayaran"}
+                </Button>
+              )}
               
               <p className="text-xs text-center text-gray-500 mt-2">
                 Dengan menekan tombol di atas, Anda menyetujui syarat dan ketentuan pendakian kami.
