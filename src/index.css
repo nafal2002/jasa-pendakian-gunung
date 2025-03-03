@@ -58,7 +58,7 @@
   }
   
   .glass-card {
-    @apply bg-white/70 backdrop-blur-md rounded-xl border border-white/20 shadow-md transition-all duration-300 hover:shadow-lg;
+    @apply bg-white rounded-xl border border-gray-100 shadow-md transition-all duration-300;
   }
 
   .section-container {
@@ -71,6 +71,19 @@
   
   .section-subtitle {
     @apply text-lg md:text-xl text-muted-foreground mb-12 text-center max-w-3xl mx-auto;
+  }
+  
+  /* Button improvements */
+  .button-hover {
+    @apply relative overflow-hidden transition-all duration-300;
+  }
+  
+  .button-hover::after {
+    @apply content-[''] absolute w-full h-full top-0 left-0 bg-white/20 transform scale-x-0 origin-right transition-transform duration-300 ease-out;
+  }
+  
+  .button-hover:hover::after {
+    @apply transform scale-x-100 origin-left;
   }
 }
 
@@ -138,4 +151,50 @@
 .card-hover:hover {
   transform: translateY(-5px);
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Focus states for better accessibility */
+button:focus, a:focus, input:focus, textarea:focus, select:focus {
+  @apply outline-none ring-2 ring-primary/50 ring-offset-2;
+}
+
+/* Disable focus ring for mouse users */
+.using-mouse button:focus, .using-mouse a:focus, .using-mouse input:focus, 
+.using-mouse textarea:focus, .using-mouse select:focus {
+  @apply ring-0 ring-offset-0;
+}
+
+/* Hide scrollbar for certain elements */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Chatbot responsive fixes */
+@media (max-width: 640px) {
+  .chatbot-window {
+    width: calc(100vw - 2rem) !important;
+    right: 1rem !important;
+  }
+}
+
+/* Better toast styling */
+.toast-success {
+  @apply bg-green-50 text-green-800 border-green-200;
+}
+
+.toast-error {
+  @apply bg-red-50 text-red-800 border-red-200;
+}
+
+.toast-warning {
+  @apply bg-amber-50 text-amber-800 border-amber-200;
+}
+
+.toast-info {
+  @apply bg-blue-50 text-blue-800 border-blue-200;
 }

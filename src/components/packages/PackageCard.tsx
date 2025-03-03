@@ -21,6 +21,7 @@ export const PackageCard = ({ pkg, featured = false }: PackageCardProps) => {
           className="absolute inset-0 bg-cover bg-center transition-transform duration-700 hover:scale-110"
           style={{ backgroundImage: `url(${pkg.image})` }}
         />
+        {/* Badge for package type */}
         <div className="absolute top-3 left-3">
           <Badge className={`
             ${pkg.type === 'Open Trip' ? 'bg-blue-500' : 
@@ -32,6 +33,7 @@ export const PackageCard = ({ pkg, featured = false }: PackageCardProps) => {
           </Badge>
         </div>
         
+        {/* Featured badge */}
         {featured && (
           <div className="absolute top-3 right-3">
             <Badge className="bg-primary text-white">
