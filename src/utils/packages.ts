@@ -25,7 +25,7 @@ export const packages: TrekkingPackage[] = [
     ],
     price: "Mulai Rp 850.000/orang",
     image: "/images/package-standard.jpg",
-    paymentLink: "https://app.midtrans.com/payment-links/1740991988489"
+    paymentLink: "https://app.midtrans.com/payment-links/1741098444860"
   },
   {
     id: "premium",
@@ -42,7 +42,7 @@ export const packages: TrekkingPackage[] = [
     ],
     price: "Mulai Rp 1.500.000/orang (min. 4 orang)",
     image: "/images/package-premium.jpg",
-    paymentLink: "https://app.midtrans.com/payment-links/1740992620090"
+    paymentLink: "https://app.midtrans.com/payment-links/1741098590063"
   },
   {
     id: "special",
@@ -60,7 +60,7 @@ export const packages: TrekkingPackage[] = [
     ],
     price: "Mulai Rp 2.500.000/orang (min. 8 orang)",
     image: "/images/package-special.jpg",
-    paymentLink: "https://app.midtrans.com/payment-links/1740992733409"
+    paymentLink: "https://app.midtrans.com/payment-links/1741098788880"
   }
 ];
 

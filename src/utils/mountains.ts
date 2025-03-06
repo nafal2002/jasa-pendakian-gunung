@@ -21,7 +21,7 @@ export const mountains: Mountain[] = [
     difficulty: "Pemula",
     duration: "1-2 hari",
     description: "Gunung Bromo terkenal dengan kawahnya yang aktif dan pemandangan matahari terbit yang spektakuler dari Bukit Penanjakan. Ideal untuk pendaki pemula karena jalur pendakiannya relatif mudah.",
-    image: "/images/bromo.jpg",
+    image: "/images/bromo.PNG",
     features: ["Kawah aktif", "Lautan pasir", "Matahari terbit spektakuler", "Rute pendakian mudah"],
     paymentLink: "https://app.midtrans.com/payment-links/1740994095699"
   },
@@ -33,7 +33,7 @@ export const mountains: Mountain[] = [
     difficulty: "Pemula",
     duration: "1-2 hari",
     description: "Gunung Prau terkenal dengan padang rumput yang luas di puncaknya dan pemandangan Dieng Plateau. Sangat cocok untuk pendaki pemula dengan waktu tempuh yang relatif singkat.",
-    image: "/images/prau.jpg",
+    image: "/images/prau.PNG",
     features: ["Padang rumput luas", "Pemandangan Dieng Plateau", "Golden sunrise", "Trek pendek"],
     paymentLink: "https://app.midtrans.com/payment-links/1740994308456"
   },
@@ -47,7 +47,7 @@ export const mountains: Mountain[] = [
     description: "Gunung Andong merupakan gunung yang relatif rendah dengan jalur pendakian yang mudah. Ideal untuk pendaki pemula atau keluarga yang ingin menikmati pemandangan alam yang indah.",
     image: "/images/andong.jpg",
     features: ["Trek pendek", "Pemandangan kota Magelang", "Camping ground luas", "Pendakian keluarga"],
-    paymentLink: "https://app.midtrans.com/payment-links/1740991988489"
+    paymentLink: "https://app.midtrans.com/payment-links/1741098788880"
   },
   {
     id: "merbabu",

@@ -144,7 +144,7 @@ const Chatbot = () => {
     
     // Check if asking about booking
     if (lowerMsg.includes('pesan') || lowerMsg.includes('booking') || lowerMsg.includes('reservasi')) {
-      addBotMessage("Untuk melakukan pemesanan, Anda dapat memilih gunung dan paket yang diinginkan, kemudian klik tombol 'Pesan Sekarang'. Anda akan diminta untuk mengisi data diri dan jumlah peserta. Setelah itu, Anda akan diarahkan ke halaman pembayaran. Jika ada pertanyaan lebih lanjut, silakan hubungi admin kami di WhatsApp 0812-3456-7890.");
+      addBotMessage("Untuk melakukan pemesanan, Anda dapat memilih gunung dan paket yang diinginkan, kemudian klik tombol 'Pesan Sekarang'. Anda akan diminta untuk mengisi data diri dan jumlah peserta. Setelah itu, Anda akan diarahkan ke halaman pembayaran. Jika ada pertanyaan lebih lanjut, silakan hubungi admin kami di WhatsApp 0896-0456-3179.");
       return;
     }
     
